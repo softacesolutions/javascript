@@ -144,7 +144,6 @@ function crearMensaje(resultado) {
     
     parrafo.innerHTML = "Tu mascota atacó con " + ataqueJugador + " , las mascota del enemigo atacó con " + ataqueEnemigo + " - " + resultado
     sectionMensajes.appendChild(parrafo)
-   
 }
 
 function crearMensajeFinal(resultadoFinal) {
