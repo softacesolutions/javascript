@@ -25,7 +25,6 @@ function iniciarJuego() {
 
     let botonReiniciar = document.getElementById('boton-reiniciar')
     botonReiniciar.addEventListener('click', reiniciarJuego)
-
 }
 
 function seleccionarMascotaJugador() {
@@ -54,10 +53,8 @@ function seleccionarMascotaJugador() {
         sectionSeleccionarAtaque.style.display = 'none'
         alert("Selecciona una mascota")
     }
-        
-
+  
     seleccionarMascotaEnemigo() 
-    
 }
 
 function seleccionarMascotaEnemigo() {
@@ -98,7 +95,6 @@ function ataqueAleatorioEnemigo() {
     }
 
     combate(ataqueEnemigo, ataqueJugador)
-    
 }
 
 function combate(jugador1,jugador2) {
@@ -136,7 +132,6 @@ function revisarVidas() {
         crearMensajeFinal("FELICITACIONES! Ganaste 🎉")
     }
 }
-
 
 function crearMensaje(resultado) {
     let sectionMensajes = document.getElementById('mensajes')
