@@ -36,6 +36,9 @@ let ataquesMokepon
 let botones = []
 let victoriasJugador = 0
 let victoriasEnemigo = 0
+const fuego = 'Fuego 🔥'
+const agua = 'Agua 🤽'
+const tierra = 'Tierra ☘️'
 
 class Mokepon {
     constructor(nombre, foto, vida) {
@@ -51,27 +54,27 @@ let capipepo = new Mokepon("Capipepo", "./assets/mokepons_mokepon_capipepo_attac
 let ratigueya = new Mokepon("Ratigueya", "./assets/mokepons_mokepon_ratigueya_attack.png", 5)
 
 hipodoge.ataques.push(
-    { nombre: 'Agua 🤽', id: 'boton-agua' },
-    { nombre: 'Agua 🤽', id: 'boton-agua' },
-    { nombre: 'Agua 🤽', id: 'boton-agua' },
-    { nombre: 'Fuego 🔥', id: 'boton-fuego' },
-    { nombre: 'Tierra ☘️', id: 'boton-tierra' },
+    { nombre: agua, id: 'boton-agua' },
+    { nombre: agua, id: 'boton-agua' },
+    { nombre: agua, id: 'boton-agua' },
+    { nombre: fuego, id: 'boton-fuego' },
+    { nombre: tierra, id: 'boton-tierra' },
 )
 
 capipepo.ataques.push(
-    { nombre: 'Tierra ☘️', id: 'boton-tierra' },
-    { nombre: 'Tierra ☘️', id: 'boton-tierra' },
-    { nombre: 'Tierra ☘️', id: 'boton-tierra' },
-    { nombre: 'Agua 🤽', id: 'boton-agua' },
-    { nombre: 'Fuego 🔥', id: 'boton-fuego' },
+    { nombre: tierra, id: 'boton-tierra' },
+    { nombre: tierra, id: 'boton-tierra' },
+    { nombre: tierra, id: 'boton-tierra' },
+    { nombre: agua, id: 'boton-agua' },
+    { nombre: fuego, id: 'boton-fuego' },
 )
 
 ratigueya.ataques.push(
-    { nombre: 'Fuego 🔥', id: 'boton-fuego' },
-    { nombre: 'Fuego 🔥', id: 'boton-fuego' },
-    { nombre: 'Fuego 🔥', id: 'boton-fuego' },
-    { nombre: 'Agua 🤽', id: 'boton-agua' },
-    { nombre: 'Tierra ☘️', id: 'boton-tierra' },
+    { nombre: fuego, id: 'boton-fuego' },
+    { nombre: fuego, id: 'boton-fuego' },
+    { nombre: fuego, id: 'boton-fuego' },
+    { nombre: agua, id: 'boton-agua' },
+    { nombre: tierra, id: 'boton-tierra' },
 )
 
 mokepones.push(hipodoge, capipepo, ratigueya)
@@ -154,22 +157,10 @@ function mostrarAtaques(ataques) {
 function secuenciaAtaque() {
     botones.forEach((boton) => {
         boton.addEventListener('click', (e) => {
-            if (e.target.textContent == 'Fuego 🔥') {
-                ataqueJugador.push('FUEGO')
-                console.log(ataqueJugador)
-                boton.style.background = '#112f58'
-                boton.disabled = true
-            } else if (e.target.textContent == 'Agua 🤽') {
-                ataqueJugador.push('AGUA')
-                console.log(ataqueJugador)
-                boton.style.background = '#112f58'
-                boton.disabled = true
-            } else {
-                ataqueJugador.push('TIERRA')
-                console.log(ataqueJugador)
-                boton.style.background = '#112f58'
-                boton.disabled = true
-            }
+            ataqueJugador.push(e.target.textContent)
+            console.log(ataqueJugador)
+            boton.style.background = '#112f58'
+            boton.disabled = true
             ataqueAleatorioEnemigo()
         })
     })
@@ -186,13 +177,7 @@ function seleccionarMascotaEnemigo() {
 function ataqueAleatorioEnemigo() {
     let ataqueAleatorio = aleatorio(0, ataquesMokeponEnemigo.length - 1)
 
-    if (ataqueAleatorio == 0 || ataqueAleatorio == 1) {
-        ataqueEnemigo.push('FUEGO')
-    } else if (ataqueAleatorio == 3 || ataqueAleatorio == 4) {
-        ataqueEnemigo.push('AGUA')
-    } else {
-        ataqueEnemigo.push('TIERRA')
-    }
+    ataqueEnemigo.push(ataquesMokeponEnemigo[ataqueAleatorio].nombre)
     console.log(ataqueEnemigo)
     iniciarCombate()
 }
@@ -213,17 +198,17 @@ function combate() {
         if (ataqueJugador[index] == ataqueEnemigo[index]) {
             indexAmbosOponentes(index, index)
             crearMensaje("EMPATE 😮")
-        } else if (ataqueJugador[index] == "FUEGO" && ataqueEnemigo[index] == "TIERRA") {
+        } else if (ataqueJugador[index] == fuego && ataqueEnemigo[index] == tierra) {
             indexAmbosOponentes(index, index)
             crearMensaje("GANASTE 🎉")
             victoriasJugador++
             spanVictoriasJugador.innerHTML = victoriasJugador
-        } else if (ataqueJugador[index] == "AGUA" && ataqueEnemigo[index] == "FUEGO") {
+        } else if (ataqueJugador[index] == agua && ataqueEnemigo[index] == fuego) {
             indexAmbosOponentes(index, index)
             crearMensaje("GANASTE 🎉")
             victoriasJugador++
             spanVictoriasJugador.innerHTML = victoriasJugador
-        } else if (ataqueJugador[index] == "TIERRA" && ataqueEnemigo[index] == "AGUA") {
+        } else if (ataqueJugador[index] == tierra && ataqueEnemigo[index] == agua) {
             indexAmbosOponentes(index, index)
             crearMensaje("GANASTE 🎉")
             victoriasJugador++
