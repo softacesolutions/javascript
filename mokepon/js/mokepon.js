@@ -34,7 +34,7 @@ let botonAgua
 let botonTierra
 let ataquesMokepon
 let botones = []
-let ataques = 5
+let ataques = []
 let victoriasJugador = 0
 let victoriasEnemigo = 0
 const fuego = 'Fuego 🔥'
@@ -56,7 +56,6 @@ let ratigueya = new Mokepon("Ratigueya", "./assets/mokepons_mokepon_ratigueya_at
 let langostelvis = new Mokepon("Langostelvis", "./assets/mokepons_mokepon_langostelvis_attack.png", '🤽🔥')
 let tucapalma = new Mokepon("Tucapalma", "./assets/mokepons_mokepon_tucapalma_attack.png", '🤽☘️')
 let pydos = new Mokepon("Pydos", "./assets/mokepons_mokepon_pydos_attack.png", '☘️🔥')
-
 
 hipodoge.ataques.push(
     { nombre: agua, id: 'boton-agua' },
@@ -136,8 +135,8 @@ function iniciarJuego() {
   
     sectionSeleccionarAtaque.style.display = 'none'
     sectionReiniciar.style.display = 'none'
+
     botonMascotaJugador.addEventListener('click', seleccionarMascotaJugador)
-    
     botonReiniciar.addEventListener('click', reiniciarJuego)
 }
 
@@ -231,7 +230,7 @@ function ataqueAleatorioEnemigo() {
 
 function iniciarCombate() {
     if (ataqueJugador.length == ataques.length) {
-        combate(ataqueEnemigo, ataqueJugador)
+        combate()
     }
     
 }
