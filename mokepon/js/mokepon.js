@@ -291,18 +291,25 @@ function secuenciaAtaque() {
             boton.style.background = '#112f58'
             boton.disabled = true
             //ataqueAleatorioEnemigo()
-            if (ataqueJugador.length == ataques.length) {
+            console.log("ataqueJugador.length=" + ataqueJugador.length)
+            console.log("ataques.length=" + ataques.length)
+            if (ataqueJugador.length === ataques.length) {
+                enviarJuegoTerminado()
                 enviarAtaques()
             }
         })
     })
 }
 
+function enviarJuegoTerminado() {
+    
+}
+
 function enviarAtaques() {
     fetch(`http://localhost:8080/mokepon/${jugadorId}/ataques`, {
         method: "post",
         headers: {
-            "Content_Type": "application/json"
+            "Content-Type": "application/json"
         },
         body: JSON.stringify({
             ataques: ataqueJugador
@@ -318,7 +325,7 @@ function obtenerAtaques() {
             if (res.ok) {
                 res.json()
                     .then(function ({ ataques }) {
-                        if (ataques.length === ataqueJugador.length) {
+                        if (ataqueJugador.length === ataques.length) {
                             ataqueEnemigo = ataques
                             combate()
                         }
@@ -457,9 +464,10 @@ function enviarPosicion(x, y) {
              res.json()
                  .then(function ({ enemigos }) {
                      console.log(enemigos)
+                     let mokeponNombre = ""
+                     let mokeponEnemigo = null
                      mokeponesEnemigos = enemigos.map(function (enemigo) {
-                        let mokeponNombre = enemigo.mokepon.nombre || ""
-                        let mokeponEnemigo = null
+                        mokeponNombre = enemigo.mokepon.nombre || ""
                         switch (mokeponNombre) {
                             case "Hipodoge":
                                 mokeponEnemigo = new Mokepon("Hipodoge", "./assets/mokepons_mokepon_hipodoge_attack.png", '🤽', './assets/hipodoge.png', enemigo.id)
