@@ -196,7 +196,7 @@ function iniciarJuego() {
 }
 
 function unirseAlJuego() {
-    fetch("http://localhost:8080/unirse")
+    fetch("http://192.168.80.15:8080/unirse")
         .then(function (res) {
             if (res.ok) {
                 res.text()
@@ -251,7 +251,7 @@ function seleccionarMascotaJugador() {
 }
 
 function seleccionarMokepon(mascotaJugador) {
-    fetch(`http://localhost:8080/mokepon/${jugadorId}`,{
+    fetch(`http://192.168.80.15:8080/mokepon/${jugadorId}`,{
         method: "post",
         headers: {
             "Content-Type": "application/json"
@@ -304,7 +304,7 @@ function secuenciaAtaque() {
 }
 
 function enviarJuegoTerminado() {
-    fetch(`http://localhost:8080/mokepon/${jugadorId}/juegoTerminado`, {
+    fetch(`http://192.168.80.15:8080/mokepon/${jugadorId}/juegoTerminado`, {
         method: "post",
         headers: {
             "Content-Type": "application/json"
@@ -316,7 +316,7 @@ function enviarJuegoTerminado() {
 }
 
 function enviarAtaques() {
-    fetch(`http://localhost:8080/mokepon/${jugadorId}/ataques`, {
+    fetch(`http://192.168.80.15:8080/mokepon/${jugadorId}/ataques`, {
         method: "post",
         headers: {
             "Content-Type": "application/json"
@@ -330,7 +330,7 @@ function enviarAtaques() {
 }
 
 function obtenerJuegoTerminado() {
-    fetch(`http://localhost:8080/mokepon/${jugadorId}/${enemigoId}/juegoTerminado`)
+    fetch(`http://192.168.80.15:8080/mokepon/${jugadorId}/${enemigoId}/juegoTerminado`)
         .then(function (res) {
             if (res.ok) {
                 res.json()
@@ -342,7 +342,7 @@ function obtenerJuegoTerminado() {
 }
 
 function obtenerAtaques() {
-    fetch(`http://localhost:8080/mokepon/${enemigoId}/ataques`)
+    fetch(`http://192.168.80.15:8080/mokepon/${enemigoId}/ataques`)
         .then(function (res) {
             if (res.ok) {
                 res.json()
@@ -481,7 +481,7 @@ function pintarCanvas() {
 }
 
 function enviarPosicion(x, y) {
-    fetch(`http://localhost:8080/mokepon/${jugadorId}/posicion`, {
+    fetch(`http://192.168.80.15:8080/mokepon/${jugadorId}/posicion`, {
         method: "post",
         headers: {
             "Content-Type": "application/json"
