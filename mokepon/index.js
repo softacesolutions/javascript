@@ -25,6 +25,10 @@ class Jugador {
     asignarAtaques(ataques) {
         this.ataques = ataques
     }
+
+    finalizarJuego(juegoTerminado) {
+        this.juegoTerminado = juegoTerminado
+    }
 }
 
 class Mokepon {
@@ -96,6 +100,32 @@ app.get("/mokepon/:jugadorId/ataques", (req, res) => {
     const jugador = jugadores.find((jugador) => jugador.id === jugadorId)
     res.send({
         ataques: jugador.ataques || []
+    })
+})
+
+app.post("/mokepon/:jugadorId/juegoTerminado", (req, res) => {
+    const jugadorId = req.params.jugadorId || ""
+    const juegoTerminado = req.body.juegoTerminado || false
+    
+    const jugadorIndex = jugadores.findIndex((jugador) => jugadorId === jugador.id)
+
+    if (jugadorIndex >= 0) {
+        jugadores[jugadorIndex].finalizarJuego(juegoTerminado)
+    }
+    console.log(jugadores)
+    console.log(jugadorId)
+    res.end()
+})
+
+app.get("/mokepon/:jugadorId/:enemigoId/juegoTerminado", (req, res) => {
+    const jugadorId = req.params.jugadorId || ""
+    const jugador = jugadores.find((jugador) => jugador.id === jugadorId)
+
+    const enemigoId = req.params.enemigoId || ""
+    const enemigo = jugadores.find((enemigo) => enemigo.id === enemigoId)
+
+    res.send({
+        juegoTerminado: jugador.juegoTerminado && enemigo.juegoTerminado  || false
     })
 })
 

@@ -21,6 +21,7 @@ const contenedorAtaques = document.getElementById('contenedor-ataques')
 const sectionVerMapa = document.getElementById('ver-mapa')
 const mapa = document.getElementById('mapa')
 
+let finJuego = false
 let jugadorId = null
 let enemigoId = null
 let mokepones = []
@@ -302,7 +303,15 @@ function secuenciaAtaque() {
 }
 
 function enviarJuegoTerminado() {
-    
+    fetch(`http://localhost:8080/mokepon/${jugadorId}/juegoTerminado`, {
+        method: "post",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            juegoTerminado: true
+        })
+    })
 }
 
 function enviarAtaques() {
@@ -315,8 +324,20 @@ function enviarAtaques() {
             ataques: ataqueJugador
         })
     })
-
+    obtenerJuegoTerminado()
     intervalo = setInterval(obtenerAtaques, 50)
+}
+
+function obtenerJuegoTerminado() {
+    fetch(`http://localhost:8080/mokepon/${jugadorId}/${enemigoId}/juegoTerminado`)
+        .then(function (res) {
+            if (res.ok) {
+                res.json()
+                    .then(function ({ juegoTerminado }) {
+                        finJuego = juegoTerminado
+                    })
+            }
+        })
 }
 
 function obtenerAtaques() {
@@ -325,13 +346,15 @@ function obtenerAtaques() {
             if (res.ok) {
                 res.json()
                     .then(function ({ ataques }) {
-                        if (ataqueJugador.length === ataques.length) {
+                        if (finJuego) {
                             ataqueEnemigo = ataques
                             combate()
-                        }
+                        } 
                     })
             }
         })
+
+        obtenerJuegoTerminado()
 }
 
 function seleccionarMascotaEnemigo(enemigo) {
@@ -384,7 +407,10 @@ function combate() {
         else {
             indexAmbosOponentes(index, index)
             crearMensaje("PERDISTE 😭")
-            victoriasEnemigo++
+            if (ataqueJugador[index] != null && ataqueEnemigo[index] != null) {
+                victoriasEnemigo++
+            }
+            
             spanVictoriasEnemigo.innerHTML = victoriasEnemigo
         }  
     }
@@ -409,8 +435,12 @@ function crearMensaje(resultado) {
     nuevoAtaqueJugador.innerHTML= indexAtaqueJugador
     nuevoAtaqueEnemigo.innerHTML = indexAtaqueEnemigo
 
-    ataquesJugador.appendChild(nuevoAtaqueJugador)
-    ataquesEnemigo.appendChild(nuevoAtaqueEnemigo)
+    if (indexAtaqueJugador != "null") {
+        ataquesJugador.appendChild(nuevoAtaqueJugador)
+    }
+    if (indexAtaqueEnemigo != null) {
+        ataquesEnemigo.appendChild(nuevoAtaqueEnemigo)
+    }
 }
 
 function crearMensajeFinal(resultadoFinal) {
