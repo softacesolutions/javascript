@@ -209,7 +209,7 @@ function unirseAlJuego() {
 }
 
 function seleccionarMascotaJugador() {
-    sectionSeleccionarMascota.style.display = 'none'
+
     
     if (inputHipodoge.checked) {
         spanMascotaJugador.innerHTML = inputHipodoge.id
@@ -236,10 +236,11 @@ function seleccionarMascotaJugador() {
         mascotaJugador = inputPydos.id
     }
     else {
-        sectionSeleccionarMascota.style.display = 'block'
-        sectionSeleccionarAtaque.style.display = 'none'
         alert("Selecciona una mascota")
+        return
     }
+
+    sectionSeleccionarMascota.style.display = 'none'
 
     seleccionarMokepon(mascotaJugador)
 
@@ -384,7 +385,7 @@ function indexAmbosOponentes(jugador, enemigo) {
 
 function combate() {
     clearInterval(intervalo)
-    for (let index = 0; index < ataqueJugador.length; index++) {
+    for (let index = 0; index < ataqueJugador.length || index < ataqueEnemigo.length; index++) {
         if (ataqueJugador[index] == ataqueEnemigo[index]) {
             indexAmbosOponentes(index, index)
             crearMensaje("EMPATE 😮")
@@ -403,14 +404,15 @@ function combate() {
             crearMensaje("GANASTE 🎉")
             victoriasJugador++
             spanVictoriasJugador.innerHTML = victoriasJugador
-        }
-        else {
+        } else if (ataqueJugador[index] != undefined && ataqueEnemigo[index] == undefined) {
+            indexAmbosOponentes(index, index)
+            crearMensaje("GANASTE 🎉")
+            victoriasJugador++
+            spanVictoriasJugador.innerHTML = victoriasJugador
+        } else {
             indexAmbosOponentes(index, index)
             crearMensaje("PERDISTE 😭")
-            if (ataqueJugador[index] != null && ataqueEnemigo[index] != null) {
-                victoriasEnemigo++
-            }
-            
+            victoriasEnemigo++            
             spanVictoriasEnemigo.innerHTML = victoriasEnemigo
         }  
     }
@@ -435,10 +437,10 @@ function crearMensaje(resultado) {
     nuevoAtaqueJugador.innerHTML= indexAtaqueJugador
     nuevoAtaqueEnemigo.innerHTML = indexAtaqueEnemigo
 
-    if (indexAtaqueJugador != "null") {
+    if (indexAtaqueJugador != undefined) {
         ataquesJugador.appendChild(nuevoAtaqueJugador)
     }
-    if (indexAtaqueEnemigo != null) {
+    if (indexAtaqueEnemigo != undefined) {
         ataquesEnemigo.appendChild(nuevoAtaqueEnemigo)
     }
 }
